@@ -34,7 +34,6 @@ def on_connect(client, userdata, flags, reason_code, properties):
   if reason_code>0:
     print(f"Error connecting with reason code {reason_code}")
 
-
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.username_pw_set(username=c.MQTT_USER,password=c.MQTT_PASSWORD)
 client.on_connect = on_connect
@@ -51,5 +50,18 @@ if result.rc==mqtt.MQTT_ERR_SUCCESS:
   print(f"Successfully sent {cpu_temp} to {c.MQTT_TOPIC_TEMP}")
 else:
   print("Error publishing message")
+
+# Get Pi Disk Usage
+disk = gz.DiskUsage()
+disk_usage = disk.usage
+disk_usage = round(disk_usage, 1)
+
+# Publish to MQTT broker
+result=client.publish(c.MQTT_TOPIC_DISK, payload=disk_usage, qos=0, retain=False)
+if result.rc==mqtt.MQTT_ERR_SUCCESS:
+  print(f"Successfully sent {disk_usage} to {c.MQTT_TOPIC_DISK}")
+else:
+  print("Error publishing message")
+
 
 client.disconnect()
