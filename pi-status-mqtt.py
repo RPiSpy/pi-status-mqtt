@@ -25,6 +25,7 @@
 import paho.mqtt.client as mqtt
 import gpiozero as gz
 import time
+import datetime
 
 import config as c
 
@@ -44,24 +45,32 @@ cpu = gz.CPUTemperature()
 cpu_temp = cpu.temperature
 cpu_temp = round(cpu_temp, 1)
 
+# Get timestamp
+ct = datetime.datetime.now()
+
 # Publish to MQTT broker
 result=client.publish(c.MQTT_TOPIC_TEMP, payload=cpu_temp, qos=0, retain=False)
 if result.rc==mqtt.MQTT_ERR_SUCCESS:
-  print(f"Successfully sent {cpu_temp} to {c.MQTT_TOPIC_TEMP}")
+  print(f"Successfully sent {cpu_temp} to {c.MQTT_TOPIC_TEMP} at {ct}")
 else:
-  print("Error publishing message")
+  print(f"Error publishing message at {ct}")
+
+time.sleep(5)
 
 # Get Pi Disk Usage
 disk = gz.DiskUsage()
 disk_usage = disk.usage
 disk_usage = round(disk_usage, 1)
 
+# Get timestamp
+ct = datetime.datetime.now()
+
 # Publish to MQTT broker
 result=client.publish(c.MQTT_TOPIC_DISK, payload=disk_usage, qos=0, retain=False)
 if result.rc==mqtt.MQTT_ERR_SUCCESS:
-  print(f"Successfully sent {disk_usage} to {c.MQTT_TOPIC_DISK}")
+  print(f"Successfully sent {disk_usage} to {c.MQTT_TOPIC_DISK} at {ct}")
 else:
-  print("Error publishing message")
+  print(f"Error publishing message at {ct}")
 
 
 client.disconnect()
