@@ -6,13 +6,13 @@
 # /_/|_/_/  /_/___/ .__/\_, /
 #                /_/   /___/
 #
-# Project : Pi CPU Temperature MQTT Publish
-# File    : pi_temp_mqtt_publish.py
+# Project : Pi Status MQTT Publish
+# File    : pi_status_mqtt.py
 #
-# Script to send the Pi CPU temperature to MQTT broker.
+# Script to send the Pi CPU temperature and disk usage to MQTT broker.
 #
 # Author : Matt Hawkins
-# Date   : 06/03/2024
+# Date   : 09/03/2024
 # Source : https://github.com/RPiSpy/pi-status-mqtt/
 #
 # Install instructions here:
