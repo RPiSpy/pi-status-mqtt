@@ -55,7 +55,7 @@ if result.rc==mqtt.MQTT_ERR_SUCCESS:
 else:
   print(f"Error publishing message at {ct}")
 
-time.sleep(5)
+#time.sleep(5)
 
 # Get Pi Disk Usage
 disk = gz.DiskUsage()
