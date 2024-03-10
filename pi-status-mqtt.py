@@ -12,11 +12,15 @@
 # Script to send the Pi CPU temperature and disk usage to MQTT broker.
 #
 # Author : Matt Hawkins
-# Date   : 09/03/2024
+# Date   : 10/03/2024
 # Source : https://github.com/RPiSpy/pi-status-mqtt/
 #
 # Install instructions here:
 # https://www.raspberrypi-spy.co.uk/
+#
+# Required Python modules:
+#  paho-mqtt
+#  gpiozero
 #
 # gpiozero CPUTemperature reference:
 # https://gpiozero.readthedocs.io/en/stable/api_internal.html?#cputemperature
@@ -24,8 +28,8 @@
 #-----------------------------------------------------------
 import paho.mqtt.client as mqtt
 import gpiozero as gz
-import time
 import datetime
+import random
 
 import config as c
 
@@ -41,9 +45,12 @@ client.on_connect = on_connect
 client.connect(c.MQTT_SERVER, c.MQTT_PORT, 60)
 
 # Get Pi CPU Temperature
-cpu = gz.CPUTemperature()
-cpu_temp = cpu.temperature
-cpu_temp = round(cpu_temp, 1)
+if c.TEST_MODE:
+  cpu_temp=random.random()*100
+else:
+  cpu = gz.CPUTemperature()
+  cpu_temp = cpu.temperature
+cpu_temp=round(cpu_temp,1)
 
 # Get timestamp
 ct = datetime.datetime.now()
@@ -55,11 +62,12 @@ if result.rc==mqtt.MQTT_ERR_SUCCESS:
 else:
   print(f"Error publishing message at {ct}")
 
-#time.sleep(5)
-
 # Get Pi Disk Usage
-disk = gz.DiskUsage()
-disk_usage = disk.usage
+if c.TEST_MODE:
+  disk_usage = random.random()*100
+else:
+  disk = gz.DiskUsage()
+  disk_usage = disk.usage
 disk_usage = round(disk_usage, 1)
 
 # Get timestamp
