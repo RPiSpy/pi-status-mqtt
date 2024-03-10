@@ -28,6 +28,7 @@
 #-----------------------------------------------------------
 import paho.mqtt.client as mqtt
 import gpiozero as gz
+import time
 import datetime
 import random
 
@@ -46,6 +47,7 @@ client.connect(c.MQTT_SERVER, c.MQTT_PORT, 60)
 
 # Get Pi CPU Temperature
 if c.TEST_MODE:
+  print("Test mode is True")
   cpu_temp=random.random()*100
 else:
   cpu = gz.CPUTemperature()
@@ -61,6 +63,9 @@ if result.rc==mqtt.MQTT_ERR_SUCCESS:
   print(f"Successfully sent {cpu_temp} to {c.MQTT_TOPIC_TEMP} at {ct}")
 else:
   print(f"Error publishing message at {ct}")
+
+# Short delay to ensure we are ready to send next message
+time.sleep(5)
 
 # Get Pi Disk Usage
 if c.TEST_MODE:
