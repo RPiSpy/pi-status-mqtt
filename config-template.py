@@ -3,5 +3,5 @@ MQTT_PORT=1883
 MQTT_USER='YOURMQTTUSER'
 MQTT_PASSWORD='YOURPASSWORD'
 MQTT_TOPIC_TEMP='house/temp/mypidevice'
-MQTT_TOPIC_DISK='devices/disk/mypidevice'
+MQTT_TOPIC_DISK='house/disk/mypidevice'
 TEST_MODE=True

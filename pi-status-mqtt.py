@@ -12,8 +12,10 @@
 # Script to send the Pi CPU temperature and disk usage to MQTT broker.
 #
 # Author : Matt Hawkins
-# Date   : 10/03/2024
+# Date   : 28/03/2024
 # Source : https://github.com/RPiSpy/pi-status-mqtt/
+#
+# Python : 3.7 or newer
 #
 # Install instructions here:
 # https://www.raspberrypi-spy.co.uk/
